@@ -1,0 +1,5 @@
+[[rule]]
+name = "bump"
+language = "python"
+inputs = ["requirements.txt"]
+deps = ["bumpreqs"]
