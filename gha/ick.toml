@@ -1,0 +1,5 @@
+[[rule]]
+name = "upgrade"
+language = "python"
+deps = ["codemod-yaml"]
+inputs = [".github/workflows/*.yml"]
