@@ -1,0 +1,25 @@
+[[rule]]
+name = "dont_import_from_src"
+description = """
+Flags when you import `src.<stuff>` in Python.
+
+This is generally indicative of trying to work without `PYTHONPATH` or a
+virtualenv set up properly, which also means you might be missing dependencies
+or your tests finding different copies of things than you would in production.
+"""
+impl = "python"
+urgency = "now"
+
+[[rule]]
+name = "dont_alter_sys_path"
+description = """
+Flags when you try to alter `sys.path` in common ways.
+
+Adjusting `sys.path` is discouraged, especially at import time, because it can
+make code harder to reason about.  Instead, it's better to set up dependencies
+between the directories as projects, or ensure that the right code is installed
+in a virtualenv.
+"""
+impl = "python"
+urgency = "now"
+deps = ["static-qualname"]
