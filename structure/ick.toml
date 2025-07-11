@@ -9,6 +9,7 @@ or your tests finding different copies of things than you would in production.
 """
 impl = "python"
 urgency = "now"
+inputs = ["*.py"]
 
 [[rule]]
 name = "dont_alter_sys_path"
@@ -23,3 +24,4 @@ in a virtualenv.
 impl = "python"
 urgency = "now"
 deps = ["static-qualname"]
+inputs = ["*.py"]
