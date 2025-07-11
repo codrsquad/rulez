@@ -1,0 +1,5 @@
+[[rule]]
+impl = "python"
+name = "long_links"
+deps = ["tree-sitter", "tree-sitter-markdown"]
+inputs = ["*.md"]
