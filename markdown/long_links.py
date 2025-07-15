@@ -20,7 +20,10 @@ def node_matches(query, node):
         yield match["node"][0]
 
 def child_for_type(node, typ):
-    return [c for c in node.children if c.type == typ][0]
+    for c in node.children:
+        if c.type == typ:
+            return c
+    raise IndexError(typ)
 
 def main(filenames: list[str]) -> int:
     exit_code = 0
