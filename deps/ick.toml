@@ -3,3 +3,9 @@ name = "bump"
 impl = "python"
 inputs = ["requirements.txt"]
 deps = ["bumpreqs"]
+
+[[rule]]
+name = "appdirs_eol"
+impl = "python"
+scope = "project"
+deps = ["metadata-please"]
