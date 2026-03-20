@@ -1,0 +1,6 @@
+[project]
+name = "myproject"
+dependencies = [
+    "platformdirs>=1.4.4",
+    "requests",
+]

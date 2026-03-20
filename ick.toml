@@ -1,3 +1,8 @@
 [[ruleset]]
 path = "."
 prefix = ""
+
+[[rule]]
+name = "gitignores"
+scope = "repo"
+impl = "python"

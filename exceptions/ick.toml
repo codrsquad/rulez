@@ -1,0 +1,5 @@
+[[rule]]
+name = "bare_raise"
+impl = "python"
+scope = "file"
+inputs = ["*.py"]

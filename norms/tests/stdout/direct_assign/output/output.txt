@@ -1,0 +1,1 @@
+example.py:3: assign to sys.stdout directly; use a context manager

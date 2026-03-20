@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 from tree_sitter_markdown import language, inline_language
-from tree_sitter import Parser, Language
+from tree_sitter import Parser, Language, QueryCursor
 
 block_language = Language(language())
 block_parser = Parser(block_language)
@@ -16,7 +16,7 @@ inline_parser = Parser(inline_language)
 inline_link = inline_language.query("(inline_link) @node")
 
 def node_matches(query, node):
-    for idx, match in query.matches(node):
+    for idx, match in QueryCursor(query).matches(node):
         yield match["node"][0]
 
 def child_for_type(node, typ):

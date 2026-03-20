@@ -1,0 +1,6 @@
+[[rule]]
+name = "fstring_repr"
+impl = "python"
+scope = "file"
+inputs = ["*.py"]
+deps = ["fixit", "libcst"]

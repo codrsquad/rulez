@@ -1,0 +1,6 @@
+[[rule]]
+name = "pass_context_location"
+impl = "python"
+scope = "file"
+inputs = ["*.py"]
+deps = ["fixit", "libcst"]
