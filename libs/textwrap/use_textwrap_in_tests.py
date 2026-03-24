@@ -106,7 +106,10 @@ class UseTextwrapTransformer(cst.CSTTransformer):
         pos = self.get_metadata(PositionProvider, original_node)
         src_line = self._src_lines[pos.start.line - 1]
         stmt_indent = " " * _leading_spaces(src_line)
-        correct_indent = stmt_indent + self._module.default_indent
+        if not stmt_indent:
+            return updated_node
+
+        correct_indent = stmt_indent
 
         new_content = _reindent_content(content, correct_indent, stmt_indent)
         new_value = prefix + quote + new_content + quote
