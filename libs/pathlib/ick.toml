@@ -4,3 +4,5 @@ impl = "python"
 scope = "file"
 inputs = ["*.py"]
 deps = ["fixit", "libcst"]
+# This was causing unnecessary churn on working code
+urgency = "optional"

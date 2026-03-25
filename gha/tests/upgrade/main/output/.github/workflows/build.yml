@@ -23,13 +23,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: "actions/checkout@v6"
       - name: Set Up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: "actions/setup-python@v6"
         with:
           python-version: ${{ matrix.python-version }}
       -
-        uses: "astral-sh/setup-uv@v6"
+        uses: "astral-sh/setup-uv@v7"
       - name: Install
         run: |
           uv pip install -e .[test]
@@ -47,18 +47,20 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      -
+        uses: "actions/checkout@v6"
+      -
+        uses: "actions/setup-python@v6"
         with:
           python-version: "3.12"
       -
-        uses: "astral-sh/setup-uv@v6"
+        uses: "astral-sh/setup-uv@v7"
       - name: Install
         run: uv pip install build
       - name: Build
         run: python -m build
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: "actions/upload-artifact@v7"
         with:
           name: sdist
           path: dist
@@ -70,7 +72,8 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      -
+        uses: "actions/download-artifact@v8"
         with:
           name: sdist
           path: dist
