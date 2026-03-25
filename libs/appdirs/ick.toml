@@ -1,0 +1,5 @@
+[[rule]]
+name = "appdirs_to_platformdirs"
+impl = "python"
+scope = "project"
+deps = ["fixit", "libcst"]

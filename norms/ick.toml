@@ -1,0 +1,13 @@
+[[rule]]
+name = "dunder_main"
+impl = "python"
+scope = "file"
+inputs = ["*.py"]
+deps = ["fixit", "libcst"]
+
+[[rule]]
+name = "stdout"
+scope = "file"
+impl = "python"
+inputs = ["*.py"]
+deps = ["libcst"]

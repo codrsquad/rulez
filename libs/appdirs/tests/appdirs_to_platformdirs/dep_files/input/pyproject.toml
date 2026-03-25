@@ -1,0 +1,6 @@
+[project]
+name = "myproject"
+dependencies = [
+    "appdirs>=1.4.4",
+    "requests",
+]

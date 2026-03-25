@@ -1,0 +1,2 @@
+demo.py:2:4: bare 'raise' outside except block
+demo.py:7:8: bare 'raise' outside except block

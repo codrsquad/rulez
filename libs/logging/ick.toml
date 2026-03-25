@@ -1,0 +1,6 @@
+[[rule]]
+name = "quote"
+scope = "file"
+impl = "python"
+inputs = ["*.py"]
+deps = ["libcst", "fixit"]

@@ -1,0 +1,15 @@
+[[rule]]
+name = "use_textwrap_in_tests"
+impl = "python"
+scope = "file"
+inputs = ["tests/*.py"]
+order = 80
+deps = ["fixit", "libcst"]
+
+[[rule]]
+name = "reindent_textwrapped"
+impl = "python"
+scope = "file"
+inputs = ["*.py"]
+order = 90
+deps = ["fixit", "libcst"]
