@@ -1,0 +1,7 @@
+test_example.py:9:4: no need to make things look private in tests: '_plain_fixture'
+test_example.py:15:4: no need to make things look private in tests: '_called_fixture'
+test_example.py:21:4: no need to make things look private in tests: '_autouse_fixture'
+test_example.py:27:4: no need to make things look private in tests: '_direct_fixture'
+test_example.py:33:4: no need to make things look private in tests: '_aliased_module_fixture'
+test_example.py:39:4: no need to make things look private in tests: '_aliased_direct_fixture'
+test_example.py:45:10: no need to make things look private in tests: '_async_fixture'
