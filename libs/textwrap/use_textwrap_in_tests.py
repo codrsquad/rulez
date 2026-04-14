@@ -31,11 +31,22 @@ def _split_content(value: str, quote: str) -> tuple[str, str, str]:
 def _content_lines_at_margin(content: str) -> bool:
     """Return True if any non-empty content line has 0 leading spaces."""
     lines = content.split("\n")
-    start = 1 if lines[0] == "" else 0
+    start = 1 if lines[0] in ("", "\\") else 0
     for line in lines[start:-1]:
         if line and not line[0].isspace():
             return True
     return False
+
+
+def _is_textwrap_dedent(node: cst.Call) -> bool:
+    func = node.func
+    return (
+        isinstance(func, cst.Attribute)
+        and isinstance(func.value, cst.Name)
+        and func.value.value == "textwrap"
+        and isinstance(func.attr, cst.Name)
+        and func.attr.value == "dedent"
+    )
 
 
 def _leading_spaces(line: str) -> int:
@@ -76,6 +87,41 @@ class UseTextwrapTransformer(cst.CSTTransformer):
         self._src_lines = src_lines
         self.needs_import = False
         self._has_textwrap_import = False
+        self._docstring_ids: set[int] = set()
+        self._in_dedent_depth = 0
+
+    def _collect_docstring(self, body: tuple) -> None:
+        if not body:
+            return
+        first = body[0]
+        if isinstance(first, cst.SimpleStatementLine) and len(first.body) == 1:
+            stmt = first.body[0]
+            if isinstance(stmt, cst.Expr) and isinstance(stmt.value, cst.SimpleString):
+                self._docstring_ids.add(id(stmt.value))
+
+    def visit_Module(self, node: cst.Module) -> Optional[bool]:
+        self._collect_docstring(node.body)
+        return True
+
+    def visit_FunctionDef(self, node: cst.FunctionDef) -> Optional[bool]:
+        self._collect_docstring(node.body.body)
+        return True
+
+    def visit_ClassDef(self, node: cst.ClassDef) -> Optional[bool]:
+        self._collect_docstring(node.body.body)
+        return True
+
+    def visit_Call(self, node: cst.Call) -> Optional[bool]:
+        if _is_textwrap_dedent(node):
+            self._in_dedent_depth += 1
+        return True
+
+    def leave_Call(
+        self, original_node: cst.Call, updated_node: cst.Call
+    ) -> cst.BaseExpression:
+        if _is_textwrap_dedent(original_node):
+            self._in_dedent_depth -= 1
+        return updated_node
 
     def visit_Import(self, node: cst.Import) -> Optional[bool]:
         names = node.names
@@ -90,6 +136,10 @@ class UseTextwrapTransformer(cst.CSTTransformer):
     def leave_SimpleString(
         self, original_node: cst.SimpleString, updated_node: cst.SimpleString
     ) -> cst.BaseExpression:
+        if id(original_node) in self._docstring_ids:
+            return updated_node
+        if self._in_dedent_depth > 0:
+            return updated_node
         value = updated_node.value
         quote = _triple_quote(value)
         if quote is None:
