@@ -1,0 +1,2 @@
+foo.py:3:0 uses insert to modify sys.path
+foo.py:4:0 uses append to modify sys.path
