@@ -1,0 +1,6 @@
+[[rule]]
+name = "appdirs"
+description = "Replace use of appdirs with platformdirs"
+impl = "python"
+scope = "file"
+deps = ["tree-sitter", "tree-sitter-python"]
