@@ -1,0 +1,1 @@
+example.py:3: line-continuation backslash in textwrap.dedent string

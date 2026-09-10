@@ -1,4 +1,11 @@
 [[rule]]
+name = "no_line_continuations"
+impl = "python"
+scope = "file"
+inputs = ["*.py"]
+deps = ["libcst"]
+
+[[rule]]
 name = "use_textwrap_in_tests"
 impl = "python"
 scope = "file"
