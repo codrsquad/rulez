@@ -1,0 +1,6 @@
+foo.py:1:7 imports from `src`
+foo.py:2:7 imports from `src`
+foo.py:3:7 imports from `src`
+foo.py:4:0 imports from `src`
+foo.py:6:14 imports from `src`
+foo.py:7:0 imports from `src`
