@@ -159,7 +159,7 @@ class UseTextwrapTransformer(cst.CSTTransformer):
         if not stmt_indent:
             return updated_node
 
-        correct_indent = stmt_indent
+        correct_indent = stmt_indent + self._module.default_indent
 
         new_content = _reindent_content(content, correct_indent, stmt_indent)
         new_value = prefix + quote + new_content + quote
