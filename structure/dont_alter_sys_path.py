@@ -20,10 +20,13 @@ def main(filenames: list[str]) -> int:
                     func = stmt.value.func.attr
                     # TODO static-qualname doesn't have a way to feed this one
                     # file to understand from- or as-imports today.
-                    if (func in METHODS_THAT_MODIFY and 
-                        qualname_env.real_qualname(ast.unparse(stmt.value.func.value))
+                    if (
+                        func in METHODS_THAT_MODIFY
+                        and qualname_env.real_qualname(
+                            ast.unparse(stmt.value.func.value)
+                        )
                         == "sys.path"
-                        ):
+                    ):
                         print(f"{f}:{stmt.lineno}:{stmt.col_offset} uses {func} to modify sys.path")
                         exit_code = 99
     return exit_code
