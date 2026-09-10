@@ -2,18 +2,17 @@ import sys
 from pathlib import Path
 
 from tree_sitter_markdown import language, inline_language
-from tree_sitter import Parser, Language, QueryCursor
+from tree_sitter import Language, Parser, Query, QueryCursor
 
 block_language = Language(language())
 block_parser = Parser(block_language)
 
-link_reference_def = block_language.query("(link_reference_definition) @node")
-section = block_language.query("(section) @node")
-inline = block_language.query("(inline) @node")
+link_reference_def = Query(block_language, "(link_reference_definition) @node")
+inline = Query(block_language, "(inline) @node")
 
 inline_language = Language(inline_language())
 inline_parser = Parser(inline_language)
-inline_link = inline_language.query("(inline_link) @node")
+inline_link = Query(inline_language, "(inline_link) @node")
 
 def node_matches(query, node):
     for idx, match in QueryCursor(query).matches(node):
