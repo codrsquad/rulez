@@ -14,6 +14,9 @@ inline_language = Language(inline_language())
 inline_parser = Parser(inline_language)
 inline_link = Query(inline_language, "(inline_link) @node")
 
+MAX_INLINE_LINK_DESTINATION_BYTES = 80
+
+
 def node_matches(query, node):
     for idx, match in QueryCursor(query).matches(node):
         yield match["node"][0]
@@ -43,9 +46,12 @@ def main(filenames: list[str]) -> int:
 
             for link in node_matches(inline_link, inline_tree.root_node):
                 dest = child_for_type(link, "link_destination")
-                if len(dest.text) > 30:
+                if len(dest.text) > MAX_INLINE_LINK_DESTINATION_BYTES:
                     link_text = b"[" + child_for_type(link, "link_text").text + b"]"
-                    if link_text not in link_references:
+                    if link_text in link_references:
+                        if link_references[link_text] != dest.text:
+                            continue
+                    else:
                         link_references[link_text] = dest.text
                         # TODO link_text might have newlines, should replace with single space?
                         lines_to_add.append(link_text + b": " + dest.text)
